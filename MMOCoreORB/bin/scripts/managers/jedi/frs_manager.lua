@@ -7,7 +7,7 @@ darkEnclaveID = 3435626
 petitionInterval = 1000 --86400000 -- 1 day
 votingInterval = 1000 --86400000 -- 1 day
 acceptanceInterval = 30000 -- 1 day
-maintenanceInterval = 30000 -- 1 day
+maintenanceInterval = 604800000 -- 1 day
 
 requestDemotionDuration = 604800000 -- 7 days
 voteChallengeDuration = 604800000 -- 7 days
