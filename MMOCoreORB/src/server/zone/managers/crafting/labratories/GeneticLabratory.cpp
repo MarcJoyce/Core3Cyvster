@@ -370,7 +370,7 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 
 		// Get attribute cap value, update max value for experimentation and get max percentage
 		capValue = craftingValues->getCapValue(attribute);
-		craftingValues = 1000;//->setMaxValue(attribute, 1000.f);
+		craftingValues->setMaxValue(1000.f);
 
 		maxPercentage = 1.0f;//(capValue / 1000.f);
 
