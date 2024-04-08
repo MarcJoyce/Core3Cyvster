@@ -4,10 +4,10 @@ frsEnabled = 1
 lightEnclaveID = 8525417
 darkEnclaveID = 3435626
 
-petitionInterval = 10000 --86400000 -- 1 day
-votingInterval = 10000 --86400000 -- 1 day
-acceptanceInterval = 86400000 -- 1 day
-maintenanceInterval = 86400000 -- 1 day
+petitionInterval = 1000 --86400000 -- 1 day
+votingInterval = 1000 --86400000 -- 1 day
+acceptanceInterval = 30000 -- 1 day
+maintenanceInterval = 30000 -- 1 day
 
 requestDemotionDuration = 604800000 -- 7 days
 voteChallengeDuration = 604800000 -- 7 days
@@ -22,7 +22,7 @@ baseMaintCost = 0 --100
 requestDemotionCost = 20000000 --2000
 voteChallengeCost = 20000000 --1000
 
-maxPetitioners = 11
+maxPetitioners = 100000
 maxChallenges = 20
 missedVotePenalty = 0 --100 -- FRS XP
 
