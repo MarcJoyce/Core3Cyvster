@@ -369,7 +369,7 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 			continue;
 
 		// Get attribute cap value, update max value for experimentation and get max percentage
-		capValue = craftingValues->getCapValue(attribute);
+		capValue = 1000;//craftingValues->getCapValue(attribute);
 		craftingValues->setMaxValue(attribute, 1000.f);
 
 		maxPercentage = 1.0f;//(capValue / 1000.f);
@@ -386,8 +386,8 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 		info(true) << "Setting Attribute Value: " << initialValue << " with Cap Value: " << capValue <<  " Group: " << group;
 #endif
 
-		if (attribute == "fortitude" && initialValue >= 500.f) {
-			fortitude = initialValue;
+		if (attribute == "fortitude" && initialValue >= 1001.f) {
+			fortitude = 1000;
 
 #ifdef DEBUG_GENETIC_LAB
 			info(true) << "Fortitude is over 500: " << fortitude;
@@ -610,7 +610,9 @@ void GeneticLabratory::experimentRow(CraftingValues* craftingValues,int rowEffec
 
 	float newValue = 0.f, capValue = 0.f, fortDiff = 0.f;
 
-	float modifier = calculateExperimentationValueModifier(experimentationResult, (pointsAttempted * 5) * 2000.f;
+	pointsAttempted = pointsAttempted * 5; //adding 5x experimentation points modifier
+
+	float modifier = calculateExperimentationValueModifier(experimentationResult, pointsAttempted) * 2000.f;
 
 	float attValue1 = craftingValues->getCurrentValue(attribute1);
 	float attValue2 = craftingValues->getCurrentValue(attribute2);
@@ -631,7 +633,7 @@ void GeneticLabratory::experimentRow(CraftingValues* craftingValues,int rowEffec
 
 	// Attribute 1
 	capValue = craftingValues->getCapValue(attribute1);
-	float att1Mod = 1000;//(swap1 ? (modifier * signSwap) : modifier);
+	float att1Mod = (swap1 ? (modifier * signSwap) : modifier);
 
 	newValue = attValue1 + (attValue2 / (attValue1 + attValue2) * att1Mod);
 
@@ -650,7 +652,7 @@ void GeneticLabratory::experimentRow(CraftingValues* craftingValues,int rowEffec
 
 	// Attribute 2
 	capValue = craftingValues->getCapValue(attribute2);
-	float att2Mod = 1000;//(swap2 ? (modifier * signSwap) : modifier);
+	float att2Mod = (swap2 ? (modifier * signSwap) : modifier);
 
 	newValue = attValue2 + (attValue1 / (attValue1 + attValue2) * att2Mod);
 
