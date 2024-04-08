@@ -610,7 +610,7 @@ void GeneticLabratory::experimentRow(CraftingValues* craftingValues,int rowEffec
 
 	float newValue = 0.f, capValue = 0.f, fortDiff = 0.f;
 
-	float modifier = calculateExperimentationValueModifier(experimentationResult, pointsAttempted) * 2000.f;
+	float modifier = calculateExperimentationValueModifier(experimentationResult, (pointsAttempted * 5) * 2000.f;
 
 	float attValue1 = craftingValues->getCurrentValue(attribute1);
 	float attValue2 = craftingValues->getCurrentValue(attribute2);
@@ -631,7 +631,7 @@ void GeneticLabratory::experimentRow(CraftingValues* craftingValues,int rowEffec
 
 	// Attribute 1
 	capValue = craftingValues->getCapValue(attribute1);
-	float att1Mod = (swap1 ? (modifier * signSwap) : modifier);
+	float att1Mod = 1000;//(swap1 ? (modifier * signSwap) : modifier);
 
 	newValue = attValue1 + (attValue2 / (attValue1 + attValue2) * att1Mod);
 
@@ -650,7 +650,7 @@ void GeneticLabratory::experimentRow(CraftingValues* craftingValues,int rowEffec
 
 	// Attribute 2
 	capValue = craftingValues->getCapValue(attribute2);
-	float att2Mod = (swap2 ? (modifier * signSwap) : modifier);
+	float att2Mod = 1000;//(swap2 ? (modifier * signSwap) : modifier);
 
 	newValue = attValue2 + (attValue1 / (attValue1 + attValue2) * att2Mod);
 
