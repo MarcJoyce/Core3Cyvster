@@ -974,6 +974,7 @@ Vector<uint64> FrsManagerImplementation::getPlayerListByCouncil(int councilType)
 void FrsManagerImplementation::deductMaintenanceXp(CreatureObject* player) {
 	PlayerObject* ghost = player->getPlayerObject();
 
+	return;
 	if (ghost == nullptr)
 		return;
 
