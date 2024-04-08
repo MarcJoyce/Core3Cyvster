@@ -358,10 +358,10 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 	float currentPercentage = 0.0f, maxPercentage = 0.0f, capValue = 0.0f, initialValue = 0.0f, rangeValue = 0.0f, fortitude = 0.0f;
 	bool hidden = false;
 
-	for (int i = 0; i < craftingValues->getTotalExperimentalAttributes(); i++) {
+	for (int i = 0; i < 1000; i++) {
 		String attribute = craftingValues->getAttribute(i);
 		String group = craftingValues->getAttributeGroup(attribute);
-
+		
 #ifdef DEBUG_GENETIC_LAB
 		info(true) << " ==== Updating Attribute: " << attribute << " ====";
 #endif
@@ -370,7 +370,7 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 
 		// Get attribute cap value, update max value for experimentation and get max percentage
 		capValue = craftingValues->getCapValue(attribute);
-		craftingValues->setMaxValue(1000.f);
+		craftingValues->setMaxValue(attribute, 1000.f);
 
 		maxPercentage = 1.0f;//(capValue / 1000.f);
 
@@ -433,7 +433,7 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 	info(true) << "===== END Special Protections =====";
 #endif
 
-	bool armorReset = (fortitude > 500.f);
+	bool armorReset = (fortitude > 1001.f);
 	float blast = 0.f, kinetic = 0.f, energy = 0.f, heat = 0.f, cold = 0.f, electric = 0.f, acid = 0.f, stun = 0.f;
 
 	// Calculate Resistances
