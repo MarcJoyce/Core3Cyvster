@@ -62,6 +62,7 @@ includeFile("tools/tools.lua")
 includeFile("tools/shuttle_dropoff.lua")
 includeFile("tools/firework_event.lua")
 includeFile("tools/mission_level_choice.lua")
+includeFile("tools/mission_direction_choice.lua")
 
 includeFile("trainers/trainerData.lua")
 includeFile("trainers/skillTrainer.lua")
