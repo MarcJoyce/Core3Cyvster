@@ -372,7 +372,7 @@ void GeneticLabratory::setInitialCraftingValues(TangibleObject* prototype, Manuf
 		capValue = craftingValues->getCapValue(attribute);
 		craftingValues->setMaxValue(attribute, 1000.f);
 
-		maxPercentage = 1.0f;//(capValue / 1000.f);
+		maxPercentage = (capValue / 1000.f);
 
 		// Get initial assembled value
 		initialValue = Genetics::initialValue(capValue);
