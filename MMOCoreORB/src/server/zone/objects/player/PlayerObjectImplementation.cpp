@@ -2805,21 +2805,53 @@ void PlayerObjectImplementation::deleteAllWaypoints() {
 }
 
 int PlayerObjectImplementation::getLotsRemaining() {
-	Locker locker(asPlayerObject());
+	ManagedReference<CreatureObject> creature = getParent().get().castTo<CreatureObject>();
 
-	int lotsRemaining = maximumLots;
+    	if (creature == nullptr)
+        return 0;
 
-	for (int i = 0; i < ownedStructures.size(); ++i) {
-		auto oid = ownedStructures.get(i);
+  	  auto owner = creature->getClient();
 
-		Reference<StructureObject*> structure = getZoneServer()->getObject(oid).castTo<StructureObject*>();
+        if (owner != nullptr)
+        accountID = owner->getAccountID();
 
-		if (structure != nullptr) {
-			lotsRemaining = lotsRemaining - structure->getLotSize();
-		}
-	}
+   	Locker locker(asPlayerObject());
 
-	return lotsRemaining;
+        int lotsRemaining = maximumLots;
+ 	   if(lotsRemaining != 30) {
+
+        setMaximumLots(30);
+        lotsRemaining = 30;
+    }
+
+ 	   Reference<CharacterList> characterList = account->getCharacterList();
+	   auto playerManager = server->getPlayerManager();
+ 	   Reference<CreatureObject> altChar;
+
+	    for(int i = 0; i < characterList->size(); ++i) {
+  	      auto entry = &characterList->get(i);
+ 	       if(entry->getGalaxyID() == server->getZoneServer()->getGalaxyID()) {
+  	          altChar = playerManager->getPlayer(entry->getFirstName());
+  	          if(altChar != nullptr && altChar->isPlayerCreature()) {
+          	      auto ghost = altChar->getPlayerObject();
+
+           	     int debugCount = 0;
+           	     for (int j = 0; j < ghost->getTotalOwnedStructureCount(); ++j) {
+                	    auto oid = ghost->getOwnedStructure(j);
+
+         	           Reference<StructureObject> structure = getZoneServer()->getObject(oid).castTo<StructureObject>();
+
+            	        if (structure != nullptr) {
+                	        lotsRemaining = lotsRemaining - structure->getLotSize();
+                	        debugCount += structure->getLotSize();
+                    }
+                }
+
+            }
+        }
+    }
+
+    return lotsRemaining;
 }
 
 int PlayerObjectImplementation::getOwnedChatRoomCount() {
