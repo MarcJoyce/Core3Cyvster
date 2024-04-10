@@ -2805,55 +2805,22 @@ void PlayerObjectImplementation::deleteAllWaypoints() {
 }
 
 int PlayerObjectImplementation::getLotsRemaining() {
-	ManagedReference<CreatureObject> creature = getParent().get().castTo<CreatureObject>();
+	Locker locker(asPlayerObject());
 
-    	if (creature == nullptr)
-        return 0;
+	int lotsRemaining = maximumLots;
 
-  	  auto owner = creature->getClient();
+	for (int i = 0; i < ownedStructures.size(); ++i) {
+		auto oid = ownedStructures.get(i);
 
-        if (owner != nullptr)
-        accountID = owner->getAccountID();
+		Reference<StructureObject*> structure = getZoneServer()->getObject(oid).castTo<StructureObject*>();
 
-   	Locker locker(asPlayerObject());
+		if (structure != nullptr) {
+			lotsRemaining = lotsRemaining - structure->getLotSize();
+		}
+	}
 
-        int lotsRemaining = maximumLots;
- 	   if(lotsRemaining != 30) {
-
-        setMaximumLots(30);
-        lotsRemaining = 30;
-    }
-
- 	   Reference<CharacterList> characterList = account->getCharacterList();
-	   auto playerManager = server->getPlayerManager();
- 	   Reference<CreatureObject> altChar;
-
-	    for(int i = 0; i < characterList->size(); ++i) {
-  	      auto entry = &characterList->get(i);
- 	       if(entry->getGalaxyID() == server->getZoneServer()->getGalaxyID()) {
-  	          altChar = playerManager->getPlayer(entry->getFirstName());
-  	          if(altChar != nullptr && altChar->isPlayerCreature()) {
-          	      auto ghost = altChar->getPlayerObject();
-
-           	     int debugCount = 0;
-           	     for (int j = 0; j < ghost->getTotalOwnedStructureCount(); ++j) {
-                	    auto oid = ghost->getOwnedStructure(j);
-
-         	           Reference<StructureObject> structure = getZoneServer()->getObject(oid).castTo<StructureObject>();
-
-            	        if (structure != nullptr) {
-                	        lotsRemaining = lotsRemaining - structure->getLotSize();
-                	        debugCount += structure->getLotSize();
-                    }
-                }
-
-            }
-        }
-    }
-
-    return lotsRemaining;
+	return lotsRemaining;
 }
-
 int PlayerObjectImplementation::getOwnedChatRoomCount() {
 	ManagedReference<ChatManager*> chatManager = getZoneServer()->getChatManager();
 	if (chatManager == nullptr)
