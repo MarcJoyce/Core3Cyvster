@@ -841,7 +841,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 			//Fix value more than max (360)
 			if (direction > 360) 
-				direction -= 360
+				direction -= 360;
 		}
 
 		// startPos = player->getWorldCoordinate((float)distance, (float)System::random(360), false);
