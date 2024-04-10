@@ -48,7 +48,7 @@ function mission_level_choice:showLevels(pPlayer)
     sui.setPrompt(text)
 
     for i = 1, #self.levels, 1 do
-        sui.add(Self.levels[i].levelRange, "")
+        sui.add(self.levels[i].levelRange, "")
     end
 
     sui.sendTo(pPlayer)
