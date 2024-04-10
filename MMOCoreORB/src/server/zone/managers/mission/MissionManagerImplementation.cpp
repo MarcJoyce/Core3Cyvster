@@ -745,6 +745,17 @@ void MissionManagerImplementation::randomizeFactionTerminalMissions(CreatureObje
 	}
 }
 
+Vector3 getMissionPosition(CreatureObject* player, float distance, float angle) {
+	float angleRads = angle * (Math::PI / 180.0f);
+	float newAngle = angleRads * (Math::PI / 2);
+
+	float newX = player->getWorldPositionX() + (cos(newAngle) * distance); 
+	float newY = player->getWorldPositionY() + (sin(newAngle) * distance);
+	float newZ = 0.0f;
+
+	return Vector3(newX, newY, newZ);
+}
+
 void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject* player, MissionObject* mission, const uint32 faction) {
 	Zone* zone = player->getZone();
 
@@ -829,9 +840,9 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		
 		float direction = (float)System::random(360);
 
-		//Player direction choice +/- 10 degrees deviation
+		//Player direction choice +/- 5 degrees deviation
 		if (dirChoice > 0) {
-			int deviation = System::random(10);
+			int deviation = System::random(5);
 			int isMinus = System::random(100);
 
 			if (isMinus > 40)
@@ -845,7 +856,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		}
 
 		// startPos = player->getWorldCoordinate((float)distance, (float)System::random(360), false);
-		startPos = player->getWorldCoordinate((float)distance, direction, false);
+		startPos = getMissionPosition(player, (float)distance, direction);
 
 		if (zone->isWithinBoundaries(startPos)) {
 			float height = zone->getHeight(startPos.getX(), startPos.getY());
